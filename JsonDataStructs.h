@@ -20,56 +20,34 @@ struct Value
 	};
 	
 	float number = 0;
-	string name;
+	string str;
 	bool flag = false;
 	struct JsonObject *obj = nullptr;
 	struct JsonArray *arr = nullptr;
 	ValueType type = ValueType::EMPTY;
 
-	~Value()
-	{
-		if (obj != nullptr)
-		{
-			delete obj;
-		}
-		if (arr != nullptr)
-		{
-			delete arr;
-		}
-		type = ValueType::EMPTY;
-	}
+	Value() {}
+	Value(string str) : str(str) {}
+	~Value();
+
+	void changeValue(string newValue);
+
+private:
+	void destroy();
 };
 
 struct JsonObject
 {
 	map<string, Value*> keyValueMap;
-
-	~JsonObject()
-	{
-		for (pair<string, Value*> keyValuePair : keyValueMap)
-		{
-			if (keyValuePair.second != nullptr)
-			{
-				delete keyValuePair.second;
-			}
-		}
-	}
+	vector<Value> find(string key);
+	~JsonObject();
 };
 
 struct JsonArray
 {
 	vector<Value*> values;
-
-	~JsonArray()
-	{
-		for (Value* value : values)
-		{
-			if (value != nullptr)
-			{
-				delete value;
-			}
-		}
-	}
+	vector<Value> find(string key);
+	~JsonArray();
 };
 
 istream& operator>>(istream& in, Value& val);

@@ -1,11 +1,16 @@
 {
 "children" : [ {
 "hobby" : "dancing" ,
+"job" : "singer" ,
 "name" : "Alice" 
 } , {
 "hobby" : "playing video games" ,
 "name" : "Boris" 
 } ] ,
 "hobby" : "skiing" ,
-"name" : "Jhon" 
+"name" : "Jhon" ,
+"pockets" : {
+"left" : "wallet" ,
+"right" : "phone" 
+} 
 }

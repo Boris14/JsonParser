@@ -24,3 +24,44 @@ void JsonParser::write(string fileName)
 	out << object;
 	out.close();
 }
+
+vector<Value> JsonParser::find(string key)
+{
+	return object.find(key);
+}
+
+void JsonParser::change(string path, string value)
+{
+	string wrongPathErrorString = "Wrong path given when trying to change a value";
+	vector<string> keys;
+	while (path.find('/') != string::npos)
+	{
+		keys.insert(keys.begin(), path.substr(0, path.find('/')));
+		path.erase(0, path.find('/') + 1);
+	}
+	keys.insert(keys.begin(), path);
+
+	map<string, Value*>::iterator foundPair = object.keyValueMap.find(keys.back());
+	if (foundPair == object.keyValueMap.end())
+	{
+		throw wrongPathErrorString;
+	}
+	Value* foundValue = foundPair->second;
+	keys.pop_back();
+	while (!keys.empty())
+	{
+		if (foundValue->type != Value::ValueType::OBJECT)
+		{
+			throw wrongPathErrorString;
+		}
+		foundPair = foundValue->obj->keyValueMap.find(keys.back());
+		if (foundPair == foundValue->obj->keyValueMap.end())
+		{
+			throw wrongPathErrorString;
+		}
+		foundValue = foundPair->second;
+		keys.pop_back();
+	}
+
+	foundValue->changeValue(value);
+}

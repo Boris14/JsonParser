@@ -55,6 +55,57 @@ string consumeString(istream& in)
     return result;
 }
 
+Value::~Value()
+{
+    destroy();
+}
+
+void Value::destroy()
+{
+    if (obj != nullptr && !obj->keyValueMap.empty())
+    {
+        delete obj;
+        obj = nullptr;
+    }
+    if (arr != nullptr && !arr->values.empty())
+    {
+        delete arr;
+        arr = nullptr;
+    }
+    type = ValueType::EMPTY;
+}
+
+void Value::changeValue(string newValue)
+{
+    destroy();
+    type = ValueType::STRING;
+    str = newValue;
+}
+
+JsonObject::~JsonObject()
+{
+    for (pair<string, Value*> keyValuePair : keyValueMap)
+    {
+        if (keyValuePair.second != nullptr && keyValuePair.second->type != Value::ValueType::EMPTY)
+        {
+            delete keyValuePair.second;
+        }
+    }
+    keyValueMap.clear();
+}
+
+JsonArray::~JsonArray()
+{
+    for (Value* value : values)
+    {
+        if (value != nullptr && value->type != Value::ValueType::EMPTY)
+        {
+            delete value;
+        }
+    }
+    values.clear();
+}
+
 istream& operator>>(istream& in, JsonArray& arr)
 {
     char next = peekNext(in);
@@ -103,7 +154,7 @@ istream& operator>>(istream& in, Value& val)
         {
             case '\"':
                 val.type = Value::ValueType::STRING;
-                val.name = consumeString(in);
+                val.str = consumeString(in);
                 break;
             case '{':
                 val.type = Value::ValueType::OBJECT;
@@ -209,7 +260,7 @@ ostream& operator<<(ostream& out, Value& val)
             break;
 
         case Value::ValueType::STRING:
-            out << '\"' << val.name << '\"';
+            out << '\"' << val.str << '\"';
             break;
 
         case Value::ValueType::OBJECT:
@@ -233,7 +284,7 @@ ostream& operator<<(ostream& out, JsonObject& obj)
 {
     out << '{';
 
-    int i = 0;
+    size_t i = 0;
     for (pair<string, Value*> JsonPair : obj.keyValueMap)
     {
         out << endl << '\"' << JsonPair.first << "\" :" << *JsonPair.second;
@@ -253,7 +304,7 @@ ostream& operator<<(ostream& out, JsonArray& arr)
 {
     out << '[';
 
-    int i = 0;
+    size_t i = 0;
     for (Value* val : arr.values)
     {
         out << *val;
@@ -269,3 +320,49 @@ ostream& operator<<(ostream& out, JsonArray& arr)
     return out;
 }
 
+vector<Value> JsonObject::find(string key)
+{
+    vector<Value> result;
+    map<string, Value*>::iterator it = keyValueMap.find(key);
+    if (it != keyValueMap.end())
+    {
+        result.push_back(*it->second);
+    }
+
+    for (auto element : keyValueMap)
+    {
+        vector<Value> foundValues;
+        if (element.second->type == Value::ValueType::OBJECT)
+        {
+            foundValues = element.second->obj->find(key);
+        }
+        else if (element.second->type == Value::ValueType::ARRAY)
+        {
+            foundValues = element.second->arr->find(key);
+        }
+        result.insert(result.end(), foundValues.begin(), foundValues.end());
+    }
+
+    return result;
+}
+
+vector<Value> JsonArray::find(string key)
+{
+    vector<Value> result;
+
+    for (Value* value : values)
+    {
+        vector<Value> foundValues;
+        if (value->type == Value::ValueType::OBJECT)
+        {
+            foundValues = value->obj->find(key);
+        }
+        else if (value->type == Value::ValueType::ARRAY)
+        {
+            foundValues = value->arr->find(key);
+        }
+        result.insert(result.end(), foundValues.begin(), foundValues.end());
+    }
+
+    return result;
+}

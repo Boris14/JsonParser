@@ -8,7 +8,13 @@ int main()
 	try
 	{
 		JsonParser parser{ "TestFile" };
+		parser.change("pockets/left", "wallet");
 		parser.write("TestWrite");
+		auto result = parser.find("name");
+		for (auto elem : result)
+		{
+			cout << elem << endl;
+		}
 	}
 	catch (const char* error)
 	{
