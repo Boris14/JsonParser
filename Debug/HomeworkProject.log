@@ -1,0 +1,14 @@
+﻿  JsonDataStructs.cpp
+D:\ClassStuff\Uni\SecondYear\СД\HomeworkProject\HomeworkProject\JsonDataStructs.h(33,1): warning C4150: deletion of pointer to incomplete type 'JsonObject'; no destructor called
+D:\ClassStuff\Uni\SecondYear\СД\HomeworkProject\HomeworkProject\JsonDataStructs.h(25): message : see declaration of 'JsonObject'
+D:\ClassStuff\Uni\SecondYear\СД\HomeworkProject\HomeworkProject\JsonDataStructs.h(37,1): warning C4150: deletion of pointer to incomplete type 'JsonArray'; no destructor called
+D:\ClassStuff\Uni\SecondYear\СД\HomeworkProject\HomeworkProject\JsonDataStructs.h(26): message : see declaration of 'JsonArray'
+D:\ClassStuff\Uni\SecondYear\СД\HomeworkProject\HomeworkProject\JsonDataStructs.cpp(241,15): warning C4018: '<': signed/unsigned mismatch
+D:\ClassStuff\Uni\SecondYear\СД\HomeworkProject\HomeworkProject\JsonDataStructs.cpp(261,15): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
+D:\ClassStuff\Uni\SecondYear\СД\HomeworkProject\HomeworkProject\JsonDataStructs.h(33,1): warning C4150: deletion of pointer to incomplete type 'JsonObject'; no destructor called
+D:\ClassStuff\Uni\SecondYear\СД\HomeworkProject\HomeworkProject\JsonDataStructs.h(25): message : see declaration of 'JsonObject'
+D:\ClassStuff\Uni\SecondYear\СД\HomeworkProject\HomeworkProject\JsonDataStructs.h(37,1): warning C4150: deletion of pointer to incomplete type 'JsonArray'; no destructor called
+D:\ClassStuff\Uni\SecondYear\СД\HomeworkProject\HomeworkProject\JsonDataStructs.h(26): message : see declaration of 'JsonArray'
+  Generating Code...
+  HomeworkProject.vcxproj -> D:\ClassStuff\Uni\SecondYear\СД\HomeworkProject\HomeworkProject\Debug\HomeworkProject.exe

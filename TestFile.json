@@ -1,0 +1,14 @@
+{
+  "name" : "Jhon",
+  "hobby" : "skiing",
+  "children" : [
+    {
+      "name" : "Alice",
+      "hobby" : "dancing"
+    },
+    {
+      "name" : "Boris",
+      "hobby" : "playing video games"
+    }
+  ]
+}

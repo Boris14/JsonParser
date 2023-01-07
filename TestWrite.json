@@ -1,0 +1,11 @@
+{
+"children" : [ {
+"hobby" : "dancing" ,
+"name" : "Alice" 
+} , {
+"hobby" : "playing video games" ,
+"name" : "Boris" 
+} ] ,
+"hobby" : "skiing" ,
+"name" : "Jhon" 
+}
