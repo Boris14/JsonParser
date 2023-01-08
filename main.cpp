@@ -5,20 +5,18 @@ using namespace std;
 
 int main()
 {
-	try
+	JsonParser parser;
+	cout << "Type \"info\" to see the available commands." << endl;
+	while (parser.getIsActive())
 	{
-		JsonParser parser{ "TestFile" };
-		parser.change("pockets/left", "wallet");
-		parser.write("TestWrite");
-		auto result = parser.find("name");
-		for (auto elem : result)
+		try 
 		{
-			cout << elem << endl;
+			parser.handleInput();
 		}
-	}
-	catch (const char* error)
-	{
-		cout << error << endl;
+		catch (const char* error)
+		{
+			cout << "Error: " << error << endl << endl;
+		}
 	}
 
 	return 0;

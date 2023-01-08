@@ -39,14 +39,14 @@ private:
 struct JsonObject
 {
 	map<string, Value*> keyValueMap;
-	vector<Value> find(string key);
+	vector<Value*> find(string key);
 	~JsonObject();
 };
 
 struct JsonArray
 {
 	vector<Value*> values;
-	vector<Value> find(string key);
+	vector<Value*> find(string key);
 	~JsonArray();
 };
 

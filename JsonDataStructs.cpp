@@ -320,18 +320,18 @@ ostream& operator<<(ostream& out, JsonArray& arr)
     return out;
 }
 
-vector<Value> JsonObject::find(string key)
+vector<Value*> JsonObject::find(string key)
 {
-    vector<Value> result;
+    vector<Value*> result;
     map<string, Value*>::iterator it = keyValueMap.find(key);
     if (it != keyValueMap.end())
     {
-        result.push_back(*it->second);
+        result.push_back(it->second);
     }
 
     for (auto element : keyValueMap)
     {
-        vector<Value> foundValues;
+        vector<Value*> foundValues;
         if (element.second->type == Value::ValueType::OBJECT)
         {
             foundValues = element.second->obj->find(key);
@@ -346,13 +346,13 @@ vector<Value> JsonObject::find(string key)
     return result;
 }
 
-vector<Value> JsonArray::find(string key)
+vector<Value*> JsonArray::find(string key)
 {
-    vector<Value> result;
+    vector<Value*> result;
 
     for (Value* value : values)
     {
-        vector<Value> foundValues;
+        vector<Value*> foundValues;
         if (value->type == Value::ValueType::OBJECT)
         {
             foundValues = value->obj->find(key);
